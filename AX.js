@@ -1,12 +1,37 @@
- //Developed By Khalid Mahmud
- const net = require("net");
- const http2 = require("http2");
- const tls = require("tls");
- const cluster = require("cluster");
- const url = require("url");
- const crypto = require("crypto");
- const fs = require("fs");
- 
+const axios = require('axios');
+const readline = require('readline');
+
+async function validateKey(inputKey) {
+    try {
+        const response = await axios.get('https://api.khalid10.xyz/AX-Stresser/key.json');
+        const keys = response.data.keys;
+
+        const matchingKey = keys.find(storedKey => storedKey.key === inputKey);
+
+        if (matchingKey) {
+            console.log('Authentication successful. Your script can proceed.');
+            startScript(); // Call the main function if the key is valid
+        } else {
+            console.log('Invalid key. Please contact https://t.me/KHALID_MODZ to get a valid key.');
+            process.exit(1); // Exit the process if the key is invalid
+        }
+    } catch (error) {
+        console.error('Error occurred while validating key:', error.message);
+        process.exit(1); // Exit the process if an error occurs
+    }
+}
+
+function startScript() {
+    const net = require("net");
+    const http2 = require("http2");
+    const tls = require("tls");
+    const cluster = require("cluster");
+    const url = require("url");
+    const crypto = require("crypto");
+    const fs = require("fs");
+    
+    console.clear();
+    // Rest of your script goes here...
  process.setMaxListeners(0);
  require("events").EventEmitter.defaultMaxListeners = 0;
 
@@ -309,3 +334,15 @@
  
  process.on('uncaughtException', error => {});
  process.on('unhandledRejection', error => {});
+
+}
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question('Enter your key: ', (key) => {
+    validateKey(key.trim());
+    rl.close();
+});
